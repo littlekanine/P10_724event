@@ -13,10 +13,13 @@ const Slider = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      // Handle index for carrousel imgs / Infinite scroll - manages the index relative to the number of elements
+      // if index = the number of elements in the array, we come back to first element
+      // if no, we go to the next index (+1)
       setIndex((prevIndex) => (prevIndex === (byDateDesc?.length ?? 0) - 1 ? 0 : prevIndex + 1));
     }, 5000);
 
-    return () => clearTimeout(timer); // Fonction de nettoyage du timer 
+    return () => clearTimeout(timer); // Timer cleaning function
   }, [index, byDateDesc?.length]);
 
   return (
