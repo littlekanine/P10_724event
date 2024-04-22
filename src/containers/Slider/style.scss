@@ -11,8 +11,14 @@
     top: 0;
     position: absolute;
     transition: opacity 1s;
+    & img {
+      object-fit: cover;
+      width: 100%;
+      height: 586px;
+    }
     &--hide {
       opacity: 0;
+      width: 100%;
     }
     &--display {
       animation: slide 1s forwards;

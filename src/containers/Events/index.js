@@ -14,9 +14,11 @@ const EventList = () => {
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const filteredEvents = (
+    // This ternary expression ensures that filteredEvents contains either all events if type is not set.
+    // or only events of the matching type if type is set.
     (!type
       ? data?.events
-      : data?.events) || []
+      : data?.events.filter(event => event.type === type)) || [] 
   ).filter((event, index) => {
     if (
       (currentPage - 1) * PER_PAGE <= index &&
@@ -62,7 +64,7 @@ const EventList = () => {
           <div className="Pagination">
             {[...Array(pageNumber || 0)].map((_, n) => (
               // eslint-disable-next-line react/no-array-index-key
-              <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}>
+              <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}> 
                 {n + 1}
               </a>
             ))}
