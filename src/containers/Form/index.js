@@ -8,7 +8,6 @@ const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 1000
 
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
-  const [messageSent, setMessageSent] = useState(false);
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
@@ -17,9 +16,7 @@ const Form = ({ onSuccess, onError }) => {
       try {
         await mockContactApi();
         setSending(false);
-        setMessageSent(true); // Indicate that the message is sent
-        onSuccess();
-        
+        onSuccess(true);
       } catch (err) {
         setSending(false);
         onError(err);
@@ -28,9 +25,7 @@ const Form = ({ onSuccess, onError }) => {
     [onSuccess, onError]
   );
 
-  const resendMessage = () => {
-    setMessageSent(false); // Reset state to allow message to be resent
-  };
+
   return (
     <form onSubmit={sendContact}>
       <div className="row">
@@ -44,14 +39,10 @@ const Form = ({ onSuccess, onError }) => {
             type="large"
             titleEmpty
           />
-         <Field placeholder="" label="Email" />
-          {messageSent ? ( <Button onClick={resendMessage}>
-              Envoyer
-            </Button> ) : (
-            <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>
-              {sending ? "En cours" : "Envoyer"}
-            </Button>
-          )}
+        <Field placeholder="" label="Email" />	        
+          <Button type={BUTTON_TYPES.SUBMIT} disabled={sending}>	         
+            {sending ? "En cours" : "Envoyer"}	            
+          </Button>
         </div>
         <div className="col">
           <Field
