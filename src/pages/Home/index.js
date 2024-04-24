@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import EventCard from "../../components/EventCard";
@@ -16,17 +16,9 @@ import { useData } from "../../contexts/DataContext";
 const Page = () => {
   const { data } = useData();
 
-  if (!data || !data.events) {
-    // Handle the case where data is not available
-    // Or any other suitable display
-    return <div>Loading...</div>;
-  }
-
   // Sort events by date
   // Get the latest event
-  const sortedEvents = data.events.sort((a, b) => new Date(b.date) - new Date(a.date));
-  const last = sortedEvents[0];
-
+  const dataSort = data?.events.sort((a, b) => new Date(b.date) - new Date(a.date));
   return (
     <>
       <header>
@@ -36,7 +28,7 @@ const Page = () => {
         <section className="SliderContainer">
           <Slider />
         </section>
-        <section className="ServicesContainer">
+        <section className="ServicesContainer" id="nos-services">
           <h2 className="Title">Nos services</h2>
           <p>Nous organisons des événements sur mesure partout dans le monde</p>
           <div className="ListContainer">
@@ -65,11 +57,11 @@ const Page = () => {
             </ServiceCard>
           </div>
         </section>
-        <section className="EventsContainer">
-          <h2 className="Title">Nos réalisations</h2>
+        <section className="EventsContainer" id="nos-realisations">
+          <h2 className="Title" >Nos réalisations</h2>
           <EventList />
         </section>
-        <section className="PeoplesContainer">
+        <section className="PeoplesContainer" id="notre-equipe">
           <h2 className="Title">Notre équipe</h2>
           <p>Une équipe d’experts dédiés à l’organisation de vos événements</p>
           <div className="ListContainer">
@@ -130,13 +122,13 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre dernière prestation</h3>
-          <EventCard
-            imageSrc={last?.cover}
-            title={last?.title}
-            date={new Date(last?.date)}
+          {dataSort?<EventCard
+            imageSrc={dataSort[0].cover}
+            title={dataSort[0].title}
+            date={new Date(dataSort[0].date)}
             small
-            label="boom"
-          />
+            label={dataSort[0].type}
+          /> : <p>Loading</p>}
         </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>

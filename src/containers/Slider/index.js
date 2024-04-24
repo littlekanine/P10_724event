@@ -25,36 +25,35 @@ const Slider = () => {
   return (
     <div className="SlideCardList">
       {byDateDesc?.map((focus, idx) => (
-        <>
-          <div
-            className={`SlideCard SlideCard--${
-              index === idx ? "display" : "hide"
-            }`}
-          >
-            <img src={focus.cover} alt="forum" />
-            <div className="SlideCard__descriptionContainer">
-              <div className="SlideCard__description">
-                <h3>{focus.title}</h3>
-                <p>{focus.description}</p>
-                <div>{getMonth(new Date(focus.date))}</div>
-              </div>
-            </div>
-          </div>s
-          <div className="SlideCard__paginationContainer">
-            <div className="SlideCard__pagination">
-              {byDateDesc.map((_, radioIdx) => (
-                <input
-                  type="radio"
-                  name="radio-button"
-                  checked={index === radioIdx}
-                />
-              ))}
+        <div
+          className={`SlideCard SlideCard--${index === idx ? "display" : "hide"}`}
+          key={focus.id}
+        >
+          <img src={focus.cover} alt="forum" />
+          <div className="SlideCard__descriptionContainer">
+            <div className="SlideCard__description">
+              <h3>{focus.title}</h3>
+              <p>{focus.description}</p>
+              <div>{getMonth(new Date(focus.date))}</div>
             </div>
           </div>
-        </>
+        </div>
       ))}
+      <div className="SlideCard__paginationContainer">
+        <div className="SlideCard__pagination">
+          {byDateDesc?.map((focus, radioIdx) => (
+            <input
+              key={focus.id}
+              type="radio"
+              name="radio-button"
+              checked={index === radioIdx}
+              onChange={() => setIndex(radioIdx)}
+            />
+          ))}
+        </div>
+      </div>
     </div>
-  );
+  );  
 };
 
 export default Slider;
