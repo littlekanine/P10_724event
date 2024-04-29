@@ -122,7 +122,7 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre dernière prestation</h3>
-          {dataSort?<EventCard
+          { dataSort ? <EventCard
             imageSrc={dataSort[0].cover}
             title={dataSort[0].title}
             date={new Date(dataSort[0].date)}

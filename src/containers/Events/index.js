@@ -4,7 +4,6 @@ import Select from "../../components/Select";
 import { useData } from "../../contexts/DataContext";
 import Modal from "../Modal";
 import ModalEvent from "../ModalEvent";
-
 import "./style.css";
 
 const PER_PAGE = 9;
@@ -19,7 +18,7 @@ const EventList = () => {
     (!type
       ? data?.events
       : data?.events.filter(event => event.type === type)) || [] 
-  ).filter((event, index) => {
+  ).filter((_, index) => {
     if (
       (currentPage - 1) * PER_PAGE <= index &&
       PER_PAGE * currentPage > index
@@ -28,11 +27,17 @@ const EventList = () => {
     }
     return false;
   });
+
+    // Defining a function to change the filter type and reset the page:
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
   };
+
+    // Calculation of the total number of pages based on the number of filtered events:
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
+
+    // Creating a list of unique event types from the data:
   const typeList = new Set(data?.events.map((event) => event.type));
   return (
     <>

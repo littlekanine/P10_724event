@@ -46,8 +46,8 @@ const Slider = () => {
               key={focus.id}
               type="radio"
               name="radio-button"
-              checked={index === radioIdx}
-              onChange={() => setIndex(radioIdx)}
+              checked={index === radioIdx} // select or not
+              onChange={() => setIndex(radioIdx)} //
             />
           ))}
         </div>
