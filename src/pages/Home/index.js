@@ -120,16 +120,20 @@ const Page = () => {
         </div>
       </main>
       <footer className="row">
-        <div className="col presta">
-          <h3>Notre dernière prestation</h3>
-          { dataSort ? <EventCard
+      <div className="col presta">
+        <h3>Notre dernière prestation</h3>
+        {dataSort ? (
+          <EventCard
             imageSrc={dataSort[0].cover}
             title={dataSort[0].title}
             date={new Date(dataSort[0].date)}
             small
             label={dataSort[0].type}
-          /> : <p>Loading</p>}
-        </div>
+          />
+        ) : (
+          <p>Loading</p>
+        )}
+      </div>
         <div className="col contact">
           <h3>Contactez-nous</h3>
           <address>45 avenue de la République, 75000 Paris</address>
