@@ -4,7 +4,6 @@ import Select from "../../components/Select";
 import { useData } from "../../contexts/DataContext";
 import Modal from "../Modal";
 import ModalEvent from "../ModalEvent";
-
 import "./style.css";
 
 const PER_PAGE = 9;
@@ -14,10 +13,12 @@ const EventList = () => {
   const [type, setType] = useState();
   const [currentPage, setCurrentPage] = useState(1);
   const filteredEvents = (
+    // This ternary expression ensures that filteredEvents contains either all events if type is not set.
+    // or only events of the matching type if type is set.
     (!type
       ? data?.events
-      : data?.events) || []
-  ).filter((event, index) => {
+      : data?.events.filter(event => event.type === type)) || [] 
+  ).filter((_, index) => {
     if (
       (currentPage - 1) * PER_PAGE <= index &&
       PER_PAGE * currentPage > index
@@ -26,11 +27,17 @@ const EventList = () => {
     }
     return false;
   });
+
+    // Defining a function to change the filter type and reset the page:
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
   };
+
+    // Calculation of the total number of pages based on the number of filtered events:
   const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
+
+    // Creating a list of unique event types from the data:
   const typeList = new Set(data?.events.map((event) => event.type));
   return (
     <>
@@ -62,7 +69,7 @@ const EventList = () => {
           <div className="Pagination">
             {[...Array(pageNumber || 0)].map((_, n) => (
               // eslint-disable-next-line react/no-array-index-key
-              <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}>
+              <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}> 
                 {n + 1}
               </a>
             ))}
